@@ -1,6 +1,8 @@
+
 import CardList from '@/components/CardList';
+import Search from '@/components/Search';
 import { createClient } from 'contentful'
-import Image from 'next/image'
+
 
 
 const client = createClient({
@@ -10,7 +12,7 @@ const client = createClient({
 async function getData() {
   const res = await client.getEntries({
     content_type:'checker',
-    'fields.sold': 'no',
+    'fields.sold': 'false',
     'fields.checkertype': 'WASSCE RESULTS CHECKER',
     limit:1
    })
@@ -24,13 +26,17 @@ export default async function Home() {
   
   {console.log(items)}
 
-
+ 
+ 
   
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 text-white">
-      
+    <main className="flex min-h-screen bg-blue-300 flex-col items-center justify-between p-24 text-white">
+      {/* Query Component or Form */}
       <div>
-      <h2>Cards Information</h2>
+        <Search />
+      </div>
+      <div>
+      
       {data.items.map((i) => 
          
          <div className='gap-y-3 mb-3'>
