@@ -7,13 +7,17 @@ import { Button } from "@/components/ui/button"
 import {Form,FormControl,FormField,FormItem,FormLabel,FormMessage} from "@/components/ui/form"
 import {Select,SelectContent,SelectGroup,SelectItem,SelectLabel,SelectTrigger,SelectValue } from "@/components/ui/select"
 import { useRouter } from "next/navigation"
+import { Input } from "./ui/input"
+import Link from "next/link"
+
 
 
 
 const formSchema = z.object({
   
   cardtype: z.string().min(2,{message:'Required*'}),
-  
+  quantity:z.coerce.number().lte(5, { message: "You can purchase maximum of 5 at a time" }).gt(0),
+  email: z.string().email({message:'Required*'}),
 })
 
  function Search() {
@@ -24,17 +28,26 @@ const formSchema = z.object({
         resolver: zodResolver(formSchema),
         defaultValues: {
           cardtype: '',
+          quantity: 1,
+          email:'',
         
         },
       })
      
       // 2. Define a submit handler.
       function onSubmit(values: z.infer<typeof formSchema>) {
-        
+        const { cardtype, email, quantity } = values;
+
+        // Use template literals for string concatenation.
+        const redirectPath = `${cardtype}||+${email}+ ||${quantity}`;
+      
+        // Navigate to the new path.
+        router.push(redirectPath);
         // Do something with the form values.
         // This will be type-safe and validated.
-        
+      
         console.log(values)
+        
       }
 
   return (
@@ -50,8 +63,8 @@ const formSchema = z.object({
               <FormLabel>Card Type</FormLabel>
               <FormControl>
               <Select onValueChange={field.onChange} >
-                <SelectTrigger className="w-[250px] text-black">
-                    <SelectValue placeholder="Select Type of Card" />
+                <SelectTrigger className="w-full text-black">
+                    <SelectValue placeholder="Select Type of Card"  />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup>
@@ -67,7 +80,34 @@ const formSchema = z.object({
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full ">Submit</Button>
+        <FormField
+          control={form.control}
+          name="quantity"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Quantity</FormLabel>
+              <FormControl>
+              <Input type="number" placeholder="Number" {...field} />
+              </FormControl>
+              <FormMessage  />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+              <Input placeholder="Email" {...field} />
+              </FormControl>
+              <FormMessage  />
+            </FormItem>
+          )}
+        />
+      
+        <Button type="submit" className="bg-blue-700 w-full hover:bg-blue-500">Submit</Button>
       </form>
     </Form>
   )

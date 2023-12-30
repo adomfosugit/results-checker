@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
 import './globals.css'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 
 const font = Nunito({ subsets: ['latin'] })
@@ -18,8 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-       
+        <div className='bg-hero-pattern bg-cover'>
+        <Navbar />
         {children}
+        <Footer />
+        </div>
+       
         </body>
     </html>
   )

@@ -1,4 +1,11 @@
 import React from 'react'
+import {
+    Dialog,
+    DialogContent,
+  
+    DialogTrigger,
+  } from "@/components/ui/dialog"
+import { Button } from './ui/button';
 
 type Props = {
     details: {
@@ -11,6 +18,14 @@ type Props = {
 const CardList = ({details}: Props) => {
     const {serial,pin} = details
   return (
+
+    <Dialog>
+    <DialogTrigger >
+
+      <Button variant="outline">Pay To view Card </Button>
+    </DialogTrigger>
+    <DialogContent className="sm:max-w-[425px]">
+ 
     <div className='shadow-lg p-2 ring-2 rounded-sm text-black'>
         <h1 className='text-center font-bold'>Your Card Details</h1>
         <div className='flex flex-row gap-2'>
@@ -23,6 +38,9 @@ const CardList = ({details}: Props) => {
         </div>
          
     </div>
+    </DialogContent>
+  </Dialog>
+
   )
 }
 
