@@ -20,7 +20,6 @@
     "contentful": "^10.6.14",
     "lucide-react": "^0.302.0",
     "next": "14.0.4",
-    "paystack": "^2.0.1",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.49.2",

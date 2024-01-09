@@ -3,8 +3,7 @@ import React from 'react'
 
 import { createClient } from 'contentful'
 import CardList from '@/components/CardList';
-import { usePaystackPayment } from 'react-paystack';
-import { Button } from '@/components/ui/button';
+import { PaystackHookExample } from '@/components/Paystack';
 
 
 
@@ -40,48 +39,12 @@ async function getData(cardType:string,quantity:number) {
   return res;
 }
 
-// PAYSTACK
-const config = {
-  reference: (new Date()).getTime(),
-  username: 'Kweku',
-  email: 'adomfosu2000@gmail.com',
-  amount: `{0.15 * 100}`,
-  //publicKey: 'pk_live_7b0117b105694184900ff75ce52987cae7c1b04f',
-  publicKey: 'pk_test_1156b935d863b0c6d92a19b3678d034562cf062a',
-  currency: 'GHS'
-};
-
-// you can call this function anything
-const onSuccess = (reference:string) => {
-// Implementation for whatever you want to do with reference and after success call.
-console.log(reference);
-};
-
-// you can call this function anything
-const onClose = () => {
-// implementation for  whatever you want to do when the Paystack dialog closed.
-console.log('closed')
-}
-
-const PaystackHookExample = () => {
-  const initializePayment = usePaystackPayment(config);
-  return (
-    <div className='btn-container'>
-        <button  type = 'button' className='btn' onClick={() => {
-            initializePayment(onSuccess, onClose)
-        }}>Pay with Paystack</button>
-    </div>
-  );
-};
-
-
-
-
-
 const page = async ({params:{buy}} ) => {
-  const sets = decryptAndSplit(buy);
 
-  const data = await getData( sets[0], sets[2],)
+  const sets = decryptAndSplit(buy);
+  
+   console.log(sets)
+  const data = await getData( sets[0], sets[2])
   const {items} = data
 
   return (
